@@ -1,0 +1,22 @@
+{
+  "name": "eprinter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prcek/EPrinter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prcek/EPrinter/issues"
+  },
+  "homepage": "https://github.com/prcek/EPrinter#readme",
+  "devDependencies": {
+    "electron": "^2.0.8"
+  }
+}
