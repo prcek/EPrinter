@@ -15,6 +15,12 @@ install:
   - set CI=true
   - yarn
 
+build_script:
+  - ps: env
+  - yarn dist
+
+artifacts:
+  - path: dist
 
 test_script:
   - node --version
