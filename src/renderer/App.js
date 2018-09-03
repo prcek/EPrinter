@@ -9,7 +9,7 @@ class App extends React.Component {
           <h1>Printers</h1>
           <ul>
             {this.props.printers.map((p,idx)=>{
-              return (<li key={idx}>{p}</li>)
+              return (<li key={idx}>{p.name}</li>)
             })}
           </ul>
         </div>
