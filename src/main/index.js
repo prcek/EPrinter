@@ -3,6 +3,7 @@
 import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
+import promiseIpc from 'electron-promise-ipc';
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -61,3 +62,8 @@ app.on('ready', () => {
   mainWindow = createMainWindow()
 })
 
+
+promiseIpc.on('printers',(opts)=>{
+
+  return {printers:['a','b','c']};
+});

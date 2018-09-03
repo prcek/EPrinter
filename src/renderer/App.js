@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 
 class App extends React.Component {
     render() {
+      console.log("App props",this.props)
       return (
         <div>
-          <h1>Shopping List for {this.props.name}</h1>
+          <h1>Printers</h1>
           <ul>
-            <li>Instagram</li>
-            <li>WhatsApp</li>
-            <li>Oculus</li>
+            {this.props.printers.map((p,idx)=>{
+              return (<li key={idx}>{p}</li>)
+            })}
           </ul>
         </div>
       );
