@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder"
+    "dist": "yarn compile && electron-builder --publish never"
   },
   "repository": {
     "type": "git",
