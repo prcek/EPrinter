@@ -20,12 +20,12 @@
   "homepage": "https://github.com/prcek/EPrinter#readme",
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
+    "electron": "^2.0.8",
     "electron-builder": "^20.28.3",
     "electron-webpack": "^2.3.1",
     "webpack": "^4.17.1"
   },
   "dependencies": {
-    "electron": "^2.0.8",
     "electron-promise-ipc": "^0.1.3",
     "printer": "git+https://github.com/tojocky/node-printer.git",
     "react": "^16.4.2",
