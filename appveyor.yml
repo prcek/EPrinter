@@ -25,6 +25,6 @@ artifacts:
 test_script:
   - node --version
  
-build: off
+
 
 
