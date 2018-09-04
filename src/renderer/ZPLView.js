@@ -1,6 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Paper from '@material-ui/core/Paper';
 
 function arrayBufferToBase64(buffer) {
   var binary = '';
@@ -56,10 +57,10 @@ class ZPLView extends React.Component {
       const {imgdata,error} = this.state;
       return (
         <div>
-          <h1>ZPL view</h1>
-          <p>data:{data}</p>
-          {imgdata && (<img src={imgdata} />)}
-          {error && (<p> error </p>)}
+          {imgdata && (
+            <img src={imgdata} style={{border:"1px solid blue"}} />
+          )}
+          {error && (<p> zpl view error </p>)}
         </div>
       );
     }
