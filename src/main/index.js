@@ -75,5 +75,19 @@ app.on('ready', () => {
 
 
 promiseIpc.on('printers',()=>{
-  return {printers:printer.getPrinters()};
+  const pp = printer.getPrinters();
+  console.log("PRINTERS",pp);
+  return {printers:pp};
+});
+
+
+promiseIpc.on('printzpl',(opts)=>{
+  console.log("on print zpl",opts);
+  const res = printer.printDirect({data:opts.zpl,printer:opts.printer,type:'RAW',success:()=>{
+    console.log("printDirect success")
+  }, error:()=>{
+    console.log("printDirect error")
+  }});
+  
+  return {res:"ok",opts:opts};
 });

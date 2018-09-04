@@ -6,6 +6,9 @@ import { setPrinter } from './actions';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 
+//'printer-state-reasons': 'offline-report'
+//'printer-state-reasons': 'none'
+//'printer-make-and-model': 'Zebra ZPL Label Printer'
 
 class Printers extends React.Component {
 

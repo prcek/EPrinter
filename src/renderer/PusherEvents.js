@@ -37,6 +37,9 @@ class PusherEvents extends React.Component {
     }
     onPusher(data) {
       this.setState({last_event:data,last_event_date:new Date()})
+      if (this.props.onPrint && data && data.zpl) {
+        this.props.onPrint(data.zpl);
+      }
     }
   
     subscribe(channel) {
@@ -124,6 +127,7 @@ class PusherEvents extends React.Component {
     apikey: PropTypes.string,
     cluster: PropTypes.string,
     channel: PropTypes.string,
+    onPrint: PropTypes.func
   };
 
 
