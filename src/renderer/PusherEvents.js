@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import Pusher from 'pusher-js';
 import Button from '@material-ui/core/Button';
+import ZPLView from './ZPLView';
 const styles = theme => ({
  
   textField: {
@@ -106,6 +107,9 @@ class PusherEvents extends React.Component {
               <React.Fragment>
               <p> {JSON.stringify(this.state.last_event)}</p>
               <p> {JSON.stringify(this.state.last_event_date)}</p>
+              {this.state.last_event.zpl && (
+                <ZPLView data={this.state.last_event.zpl} />
+              )}
               <Button onClick={()=>this.setState({last_event:null})}> clear </Button>
               </React.Fragment>
             )}

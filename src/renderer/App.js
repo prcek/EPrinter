@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import Printers from './Printers';
 import Pusher from './Pusher';
 import PusherEvents from './PusherEvents';
-import ZPLView from './ZPLView';
 class App extends React.Component {
 
     constructor(props) {
@@ -25,7 +24,6 @@ class App extends React.Component {
           {this.state.show_printers && (<Printers />)}
           {this.state.show_pusher && (<Pusher />)}
           {this.state.grab_events && (<PusherEvents/>)}
-          <ZPLView data="^XA^A@N50,50^FDxxxx^FS^XZ"/>
         </div>
       );
     }

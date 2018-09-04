@@ -28,7 +28,7 @@ class ZPLView extends React.Component {
         mode: 'cors',
         body: formData
       };
-      fetch('http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/',options).then((response) => {
+      fetch('http://api.labelary.com/v1/printers/8dpmm/labels/2x3/0/',options).then((response) => {
         if (response.status == 200) {
           response.arrayBuffer().then((buffer)=>{
             var imageStr = arrayBufferToBase64(buffer);
