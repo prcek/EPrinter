@@ -11,7 +11,8 @@ class App extends React.Component {
       super(props);
       this.state={
         show_printers:false,
-        show_pusher:false
+        show_pusher:false,
+        grab_events:false,
       }
     }
 
@@ -20,9 +21,11 @@ class App extends React.Component {
         <div>
           <Button onClick={()=>{this.setState({show_printers:!this.state.show_printers})}}> printers </Button>
           <Button onClick={()=>{this.setState({show_pusher:!this.state.show_pusher})}}> pusher </Button>
+          <Button onClick={()=>{this.setState({grab_events:!this.state.grab_events})}}> events </Button>
           {this.state.show_printers && (<Printers />)}
           {this.state.show_pusher && (<Pusher />)}
-          <PusherEvents />
+          {this.state.grab_events && (<PusherEvents/>)}
+         
         </div>
       );
     }
