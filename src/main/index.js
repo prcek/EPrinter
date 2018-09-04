@@ -6,7 +6,9 @@ import { format as formatUrl } from 'url'
 import promiseIpc from 'electron-promise-ipc';
 import printer from 'printer';
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
+import installExtension, { REACT_DEVELOPER_TOOLS , REDUX_DEVTOOLS} from 'electron-devtools-installer';
+
+const isDevelopment = true; //process.env.NODE_ENV !== 'production'
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow
@@ -14,9 +16,9 @@ let mainWindow
 function createMainWindow() {
   const window = new BrowserWindow()
 
-  //if (isDevelopment) {
+  if (isDevelopment) {
     window.webContents.openDevTools()
-  //}
+  }
 
   if (isDevelopment) {
     window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
@@ -61,6 +63,12 @@ app.on('activate', () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
   mainWindow = createMainWindow()
+
+  if (isDevelopment) {
+    installExtension(REACT_DEVELOPER_TOOLS).then((name) => console.log(`Added Extension:  ${name}`)).catch((err) => console.log('An error occurred: ', err));
+    installExtension(REDUX_DEVTOOLS).then((name) => console.log(`Added Extension:  ${name}`)).catch((err) => console.log('An error occurred: ', err));
+
+  }
 })
 
 
