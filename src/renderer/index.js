@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import promiseIpc from 'electron-promise-ipc';
+//import promiseIpc from 'electron-promise-ipc';
 import App from './App';
 
 

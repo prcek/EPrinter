@@ -1,5 +1,6 @@
 
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class App extends React.Component {
     render() {
@@ -16,6 +17,10 @@ class App extends React.Component {
       );
     }
   }
+
+  App.propTypes = {
+    printers: PropTypes.array.isRequired
+  };
 
   
   export default App;
