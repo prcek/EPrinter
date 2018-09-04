@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "electron-webpack dev",
+    "dev": "node -v && electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder --publish never"
   },
@@ -28,6 +28,7 @@
   "dependencies": {
     "electron-promise-ipc": "^0.1.3",
     "printer": "git+https://github.com/tojocky/node-printer.git",
+    "pusher-js": "^4.3.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "source-map-support": "^0.5.9"
