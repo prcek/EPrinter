@@ -7,14 +7,19 @@ class App extends React.Component {
 
     constructor(props) {
       super(props);
+      this.state={
+        show_printers:false,
+        show_pusher:false
+      }
     }
 
     render() {
       return (
         <div>
-          <Printers />
-          <Pusher />
-          <Button variant="raised"> HELLO !</Button>
+          <Button onClick={()=>{this.setState({show_printers:!this.state.show_printers})}}> printers </Button>
+          <Button onClick={()=>{this.setState({show_pusher:!this.state.show_pusher})}}> pusher </Button>
+          {this.state.show_printers && (<Printers />)}
+          {this.state.show_pusher && (<Pusher />)}
         </div>
       );
     }
