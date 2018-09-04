@@ -2,6 +2,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Printers from './Printers';
+import Pusher from './Pusher';
 class App extends React.Component {
 
     constructor(props) {
@@ -12,6 +13,7 @@ class App extends React.Component {
       return (
         <div>
           <Printers />
+          <Pusher />
           <Button variant="raised"> HELLO !</Button>
         </div>
       );
