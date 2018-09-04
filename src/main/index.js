@@ -8,7 +8,7 @@ import printer from 'printer';
 
 import installExtension, { REACT_DEVELOPER_TOOLS , REDUX_DEVTOOLS} from 'electron-devtools-installer';
 
-const isDevelopment = true; //process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow
