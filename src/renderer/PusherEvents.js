@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
+import Pusher from 'pusher-js';
 
 const styles = theme => ({
  
@@ -21,7 +22,23 @@ class PusherEvents extends React.Component {
 
     componentDidMount() {
       //subscribe channel
+      const {apikey,cluster,channel} = this.props;
       console.log("PusherEvents.componentDidMount");
+      if (apikey && cluster && channel) {
+        this.pusher = new Pusher(apikey,{
+          cluster: cluster,
+          forceTLS: true
+        });
+        this.channel = this.pusher.subscribe(channel);
+        this.channel.bind("my-event",function(data){
+          console.log("pusher data",data);
+        });
+        
+      } else {
+        this.pusher = null;
+        this.channel = null;
+      }
+     
     }
 
     componentDidUpdate() {

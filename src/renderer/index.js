@@ -22,7 +22,7 @@ let store = createStore(persistedReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && 
 let persistor = persistStore(store)
 
 
-
+/*
 import Pusher from 'pusher-js';
 
 
@@ -37,7 +37,7 @@ var channel = pusher.subscribe("my-channel-B");
 channel.bind("my-event",function(data){
   console.log("pusher data",data);
 })
-
+*/
 
 console.log("renderer.js","start");
 
