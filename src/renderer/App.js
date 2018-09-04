@@ -1,28 +1,22 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-
+import Printers from './Printers';
 class App extends React.Component {
+
+    constructor(props) {
+      super(props);
+    }
+
     render() {
-      console.log("App props",this.props)
       return (
         <div>
-          <h1>Printers</h1>
-          <ul>
-            {this.props.printers.map((p,idx)=>{
-              return (<li key={idx}>{p.name}</li>)
-            })}
-          </ul>
+          <Printers />
           <Button variant="raised"> HELLO !</Button>
         </div>
       );
     }
   }
-
-  App.propTypes = {
-    printers: PropTypes.array.isRequired
-  };
 
   
   export default App;

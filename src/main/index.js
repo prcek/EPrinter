@@ -72,6 +72,6 @@ app.on('ready', () => {
 })
 
 
-promiseIpc.on('printers',(opts)=>{
+promiseIpc.on('printers',()=>{
   return {printers:printer.getPrinters()};
 });
