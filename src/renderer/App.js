@@ -7,6 +7,14 @@ import PusherEvents from './PusherEvents';
 import { connect } from 'react-redux'
 import promiseIpc from 'electron-promise-ipc';
 import PropTypes from 'prop-types';
+import DebugObjectView from './DebugObjectView';
+function nes(s) {
+  if (s  && s.length>0) {
+    return true;
+  }
+  return false;
+}
+
 
 class App extends React.Component {
 
@@ -17,8 +25,24 @@ class App extends React.Component {
         show_pusher:false,
         grab_events:false,
         print_on:false,
+        printer_info:null,
       }
     }
+    isCfgOk() {
+      const { printer, pusher} = this.props;
+      if (nes(printer) && nes(pusher.apikey) && nes(pusher.cluster)  && nes(pusher.channel)) {
+        return true;
+      }
+      return false;
+    }
+    componentDidMount() {
+      if (this.isCfgOk()) {
+        promiseIpc.send("checkprinter",{printer:this.props.printer}).then(res=>{
+          this.setState({printer_info:res});
+        })
+      }
+    }
+
     doPrint(zpl) {
       if (this.state.print_on) {
         promiseIpc.send('printzpl',{zpl:zpl,printer:this.props.printer}).then((data) =>{
@@ -28,9 +52,12 @@ class App extends React.Component {
     }
 
     render() {
+      const cfgOk = this.isCfgOk();
       return (
         <div>
-
+          {cfgOk && (<div> cfg ok </div>)}
+          <DebugObjectView name="redux.pusher" object={this.props.pusher} />
+          {this.state.printer_info &&(<DebugObjectView name="printer info" object={this.state.printer_info}/>)}
           <Button onClick={()=>{this.setState({show_printers:!this.state.show_printers})}}> printers </Button>
           <Button onClick={()=>{this.setState({show_pusher:!this.state.show_pusher})}}> pusher </Button>
           <Button onClick={()=>{this.setState({grab_events:!this.state.grab_events})}}> events </Button>
@@ -47,11 +74,13 @@ class App extends React.Component {
 
   App.propTypes = {
     printer: PropTypes.string,
+    pusher: PropTypes.shape({apikey:PropTypes.string,cluster:PropTypes.string,channel:PropTypes.string}).isRequired,
   };
 
   function mapStateToProps(state) {
     return { 
-        printer: state.printer.printer
+        printer: state.printer.printer,
+        pusher: state.pusher
     }
   }
   

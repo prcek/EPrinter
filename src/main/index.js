@@ -91,3 +91,9 @@ promiseIpc.on('printzpl',(opts)=>{
   
   return {res:"ok",opts:opts};
 });
+
+promiseIpc.on('checkprinter',(opts)=>{
+  console.log("on check printer",opts);
+  const pp = printer.getPrinter(opts.printer);
+  return {res:"ok",printer:pp,opts:opts};
+});
