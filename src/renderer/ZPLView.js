@@ -55,9 +55,9 @@ class ZPLView extends React.Component {
       
       const {imgdata,error} = this.state;
       return (
-        <div>
+        <div style={{width:"100%"}}>
           {imgdata && (
-            <img src={imgdata} style={{border:"1px solid blue"}} />
+            <img  src={imgdata} style={{border:"1px solid blue",width:"100%"}} />
           )}
           {error && (<p> zpl view error </p>)}
         </div>
