@@ -63,8 +63,8 @@ class App extends React.Component {
     }
 
     doPrint(zpl) {
+      this.setState({zpl_preview:zpl});
       if (this.state.print_on) {
-        this.setState({zpl_preview:zpl});
         promiseIpc.send('printzpl',{zpl:zpl,printer:this.props.printer}).then((data) =>{
           console.log("printzpl res",data)
         }).catch(e => console.error(e));
