@@ -62,6 +62,13 @@ class App extends React.Component {
       }
     }
 
+
+    openDevTool() {
+      promiseIpc.send('devtool').then(r=>{
+        console.log(r);
+      });
+    }
+
     doPrint(zpl) {
       this.setState({zpl_preview:zpl});
       if (this.state.print_on) {
@@ -109,6 +116,7 @@ class App extends React.Component {
             <Button onClick={()=>{this.setState({print_on:!this.state.print_on})}}> print on/off </Button>
             <Button onClick={()=>{this.setState({show_debug:!this.state.show_debug})}}> debug on/off </Button>
             <Button onClick={()=>{this.printTestPage()}}> print test page </Button>
+            <Button onClick={()=>{this.openDevTool()}}> devtool </Button>
           </Grid>
 
           <Grid item xs={12}>

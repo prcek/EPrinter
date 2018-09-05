@@ -15,7 +15,8 @@ let mainWindow
 
 function createMainWindow() {
   const window = new BrowserWindow({
-    webPreferences: {webSecurity: false}
+    webPreferences: {webSecurity: false},
+    title: "EPrinter 1.0"
   });
 
   if (isDevelopment) {
@@ -96,4 +97,10 @@ promiseIpc.on('checkprinter',(opts)=>{
   console.log("on check printer",opts);
   const pp = printer.getPrinter(opts.printer);
   return {res:"ok",printer:pp,opts:opts};
+});
+
+
+promiseIpc.on('devtool',()=>{
+  mainWindow.webContents.openDevTools();
+  return {res:"ok"};
 });

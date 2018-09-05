@@ -21,6 +21,9 @@ class ZPLView extends React.Component {
     }
 
     fetchImg(data) {
+      if (data==null  || data.length==0) {
+        return;
+      }
       let formData = new FormData();
       formData.append('file',data);
       var options = {
@@ -66,7 +69,7 @@ class ZPLView extends React.Component {
 }
 
 ZPLView.propTypes = {
-  data: PropTypes.string.isRequired
+  data: PropTypes.string
 };
 
 export default (ZPLView);
