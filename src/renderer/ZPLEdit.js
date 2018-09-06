@@ -39,7 +39,7 @@ class ZPLEdit extends React.Component {
                     multiline
                     rows={10}
                 />      
-                <Button onClick={()=>{this.props.onSubmit(this.state.zpl)}}> Submit </Button>
+                <Button onClick={()=>{onSubmit(this.state.zpl)}}> Submit </Button>
             
             </div>
         )

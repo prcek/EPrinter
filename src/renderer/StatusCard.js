@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import Led from './Led';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
  
@@ -10,14 +11,8 @@ const styles = theme => ({
     padding: theme.spacing.unit,
   },
  
-  red: {
-    backgroundColor:"red"
-  },
-  green: {
-    backgroundColor:"green"
-  },
   label: {
-      width:100,
+      width:120,
   }
 });
 
@@ -25,22 +20,23 @@ const styles = theme => ({
 
 class StatusCard extends React.Component {
     render() {
-        const {classes,label,ok,renderCommand} = this.props;
+        const {classes,label,ok} = this.props;
 
-        const className = classNames([
-            { [classes.red]: !ok },
-            { [classes.green]: ok},
-            classes.label
-          ]);
+        let color = 'gray';
+        if (ok == true) {
+            color = "green";
+        } else if (ok == false) {
+            color = "red";
+        }
 
 
         return (
             <Grid container>
-                <Grid item className={className}>
-                    {label}
-                </Grid>
                 <Grid item>
-                    {renderCommand?renderCommand():null}
+                    <Led innerRef={this.props.ledRef} color={color} />
+                </Grid>
+                <Grid item className={classes.label}>
+                    <Typography variant="title">{label}</Typography>
                 </Grid>
             </Grid>
         )
@@ -53,8 +49,8 @@ class StatusCard extends React.Component {
 StatusCard.propTypes = {
     classes: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
-    ok: PropTypes.bool.isRequired,
-    renderCommand: PropTypes.func
+    ok: PropTypes.bool,
+    ledRef: PropTypes.any
 };
 
 

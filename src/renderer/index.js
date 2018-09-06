@@ -13,7 +13,8 @@ import rootReducer from './reducers'
 import createElectronStorage from "redux-persist-electron-storage";
 const persistConfig = {
   key: 'root',
-  storage: createElectronStorage()
+  storage: createElectronStorage(),
+  blacklist: ['status'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

@@ -14,6 +14,9 @@ import StatusCard from './StatusCard';
 import { withStyles } from '@material-ui/core/styles';
 import ZPLView from './ZPLView';
 import ZPLEdit from './ZPLEdit';
+import Led from './Led';
+import Typography from '@material-ui/core/Typography';
+import Switch from '@material-ui/core/Switch';
 
 const styles = theme => ({
  
@@ -25,7 +28,9 @@ const styles = theme => ({
     padding: theme.spacing.unit,
     backgroundColor:"gray"
   },
-
+  switch: {
+   
+  }
 });
 
 
@@ -52,6 +57,7 @@ class App extends React.Component {
         printer_info:null,
         zpl_preview:null,
       }
+      this.printLed = React.createRef();
     }
     isCfgOk() {
       const { printer, pusher} = this.props;
@@ -77,6 +83,9 @@ class App extends React.Component {
 
     doPrint(zpl) {
       this.setState({zpl_preview:zpl});
+      if (this.printLed.current) {
+        this.printLed.current.blink();
+      }
       if (this.state.print_on) {
         promiseIpc.send('printzpl',{zpl:zpl,printer:this.props.printer}).then((data) =>{
           console.log("printzpl res",data)
@@ -106,8 +115,25 @@ class App extends React.Component {
               <StatusCard label="tiskarna" ok={cfgOk} />
               <StatusCard label="server" ok={cfgOk} />
               <StatusCard label="konfigurace" ok={cfgOk} />
-              <StatusCard label="tisk" ok={this.state.print_on} />
+              <StatusCard label="tisk" ok={this.state.print_on} ledRef={this.printLed} />
             </Paper>
+            <Paper className={classes.paper}>
+              <Typography variant="title">
+                <Switch
+                  className={classes.switch}
+                  checked={this.state.print_on}
+                  onChange={(e,checked)=>this.setState({print_on:checked})}
+                  value="checkedB"
+                  color="primary"
+                />
+                Tisk
+               </Typography>
+            </Paper>
+            <Paper>
+              <Typography variant="title"> x:<Led color="green"/></Typography>
+              <Typography variant="title"> x:<Led color="red"/></Typography>
+            </Paper>
+    
             <ZPLEdit onSubmit = {(zpl)=>this.doPrint(zpl)} />
           </Grid>
 
