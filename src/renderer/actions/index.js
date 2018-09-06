@@ -3,6 +3,10 @@ const setPrinter = (printer) => ({
     printer
 });
 
+const setPrintOn = (value) => ({
+    type: 'SET_PRINT_ON',
+    value
+});
 
 const setPusherApiKey = (apikey) => ({
     type: 'SET_PUSHER_APIKEY',
@@ -32,6 +36,7 @@ const setPusherReady = (value) =>({
 
 export {
     setPrinter,
+    setPrintOn,
     setPusherApiKey,
     setPusherCluster,
     setPusherChannel,

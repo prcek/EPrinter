@@ -3,10 +3,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import SetupIcon from '@material-ui/icons/Settings';
 import PrinterIcon from '@material-ui/icons/Print';
-//import Printers from './Printers';
-//import Pusher from './Pusher';
 import Settings from './Settings';
-//import PusherEvents from './PusherEvents';
 import { connect } from 'react-redux'
 import promiseIpc from 'electron-promise-ipc';
 import PropTypes from 'prop-types';
@@ -19,6 +16,7 @@ import ZPLView from './ZPLView';
 import ZPLEdit from './ZPLEdit';
 import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
+import { setPrintOn } from './actions';
 
 const styles = theme => ({
  
@@ -64,7 +62,6 @@ class App extends React.Component {
       this.state={
         show_debug:false,
         show_settings:false,
-        print_on:false,
         printer_info:null,
         zpl_preview:null,
       }
@@ -105,7 +102,7 @@ class App extends React.Component {
 
     doPrint(zpl,force=false) {
       this.setState({zpl_preview:zpl});
-      if (this.state.print_on || force) {
+      if (this.props.print_on || force) {
         if (this.printLed.current) {
           this.printLed.current.blink();
         }
@@ -141,7 +138,7 @@ class App extends React.Component {
               <StatusCard label="konfigurace" ok={cfgOk} />
               <StatusCard label="online" ok={online} />
               <StatusCard label="server" ok={pusher_ready} ledRef={this.serverLed} />
-              <StatusCard label="tisk" ok={this.state.print_on} ledRef={this.printLed} />
+              <StatusCard label="tisk" ok={this.props.print_on} ledRef={this.printLed} />
             </Paper>
             <Paper className={classes.paper}>
               <Button variant="contained" color="secondary" className={classes.button}
@@ -157,8 +154,8 @@ class App extends React.Component {
               <Typography variant="title">
                 <Switch
                   className={classes.switch}
-                  checked={this.state.print_on}
-                  onChange={(e,checked)=>this.setState({print_on:checked})}
+                  checked={this.props.print_on}
+                  onChange={(e,checked)=>this.props.onChangePrintOn(checked)}
                   value="checkedB"
                   color="primary"
                 />
@@ -207,17 +204,29 @@ class App extends React.Component {
     online: PropTypes.bool,
     pusher_ready: PropTypes.bool,
     printer: PropTypes.string,
+    print_on: PropTypes.bool.isRequired,
+    onChangePrintOn: PropTypes.func.isRequired,
     pusher: PropTypes.shape({apikey:PropTypes.string,cluster:PropTypes.string,channel:PropTypes.string}).isRequired,
   };
 
   function mapStateToProps(state) {
     return { 
         printer: state.printer.printer,
+        print_on: state.printer.print_on,
         pusher: state.pusher,
         online: state.status.online,
         pusher_ready: state.status.pusher_ready,
         redux_state: state
     }
   }
-  
-  export default withStyles(styles)(connect(mapStateToProps, {})(App));
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onChangePrintOn: value => {
+      dispatch(setPrintOn(value))
+    },
+  }
+}
+
+
+export default withStyles(styles)(connect(mapStateToProps,mapDispatchToProps)(App));
