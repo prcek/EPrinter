@@ -18,7 +18,7 @@ class ZPLEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            zpl:"^XA\n\n^XZ"
+            zpl:"^XA\n^A@N200,200\n^FDAhoj^FS\n^XZ"
         }
     }
     render() {
