@@ -22,10 +22,12 @@ const styles = theme => ({
  
   paper: {
     padding: theme.spacing.unit,
+    margin: theme.spacing.unit
   },
 
   graypaper: {
     padding: theme.spacing.unit,
+    margin: theme.spacing.unit,
     backgroundColor:"gray"
   },
   switch: {
@@ -109,6 +111,17 @@ class App extends React.Component {
       const cfgOk = this.isCfgOk();
       return (
         <Grid container spacing={24}>
+
+          {this.state.show_debug && (
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <DebugObjectView name="cfg" object={{pusher:this.props.pusher,printer:this.props.printer}} />
+                {this.state.printer_info &&(<DebugObjectView name="current printer info" object={this.state.printer_info}/>)}
+              </Paper>
+            </Grid>
+          )}
+   
+
           <Grid item xs={4}>
             <Paper className={classes.paper}>
               <StatusCard label="konfigurace" ok={cfgOk} />
@@ -127,9 +140,20 @@ class App extends React.Component {
                 />
                 Tisk on/off
                </Typography>
+               <Typography variant="title">
+                <Switch
+                  className={classes.switch}
+                  checked={this.state.show_debug}
+                  onChange={(e,checked)=>this.setState({show_debug:checked})}
+                  value="checkedB"
+                  color="primary"
+                />
+                Debug on/off
+               </Typography>
             </Paper>
-    
-            <ZPLEdit onSubmit = {(zpl)=>this.doPrint(zpl)} />
+            <Paper className={classes.paper}>
+              <ZPLEdit onSubmit = {(zpl)=>this.doPrint(zpl)} />
+            </Paper>
           </Grid>
 
           <Grid item xs={4}>
@@ -143,8 +167,6 @@ class App extends React.Component {
             <Button onClick={()=>{this.setState({show_printers:!this.state.show_printers})}}> printers </Button>
             <Button onClick={()=>{this.setState({show_pusher:!this.state.show_pusher})}}> pusher </Button>
             <Button onClick={()=>{this.setState({grab_events:!this.state.grab_events})}}> events </Button>
-            <Button onClick={()=>{this.setState({print_on:!this.state.print_on})}}> print on/off </Button>
-            <Button onClick={()=>{this.setState({show_debug:!this.state.show_debug})}}> debug on/off </Button>
             <Button onClick={()=>{this.printTestPage()}}> print test page </Button>
             <Button onClick={()=>{this.openDevTool()}}> devtool </Button>
           </Grid>
@@ -156,14 +178,6 @@ class App extends React.Component {
           </Grid>
 
  
-          {this.state.show_debug && (
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <DebugObjectView name="cfg" object={{pusher:this.props.pusher,printer:this.props.printer}} />
-                {this.state.printer_info &&(<DebugObjectView name="current printer info" object={this.state.printer_info}/>)}
-              </Paper>
-            </Grid>
-          )}
         </Grid>
       );
     }
