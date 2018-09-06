@@ -1,6 +1,8 @@
 
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import SetupIcon from '@material-ui/icons/Settings';
+import PrinterIcon from '@material-ui/icons/Print';
 import Printers from './Printers';
 import Pusher from './Pusher';
 import PusherEvents from './PusherEvents';
@@ -14,7 +16,6 @@ import StatusCard from './StatusCard';
 import { withStyles } from '@material-ui/core/styles';
 import ZPLView from './ZPLView';
 import ZPLEdit from './ZPLEdit';
-import Led from './Led';
 import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 
@@ -32,7 +33,16 @@ const styles = theme => ({
   },
   switch: {
    
-  }
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
 });
 
 
@@ -52,9 +62,7 @@ class App extends React.Component {
       super(props);
       this.state={
         show_debug:false,
-        show_printers:false,
-        show_pusher:false,
-        grab_events:false,
+        show_settings:false,
         print_on:false,
         printer_info:null,
         zpl_preview:null,
@@ -115,14 +123,14 @@ class App extends React.Component {
           {this.state.show_debug && (
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <DebugObjectView name="cfg" object={{pusher:this.props.pusher,printer:this.props.printer}} />
+                <DebugObjectView name="redux_state" object={this.props.redux_state} />
                 {this.state.printer_info &&(<DebugObjectView name="current printer info" object={this.state.printer_info}/>)}
               </Paper>
             </Grid>
           )}
    
 
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Paper className={classes.paper}>
               <StatusCard label="konfigurace" ok={cfgOk} />
               <StatusCard label="online" ok={online} />
@@ -130,6 +138,16 @@ class App extends React.Component {
               <StatusCard label="tisk" ok={this.state.print_on} ledRef={this.printLed} />
             </Paper>
             <Paper className={classes.paper}>
+              <Button variant="contained" color="secondary" className={classes.button}
+                onClick={()=>{this.setState({show_settings:!this.state.show_settings})}}
+              >
+                <SetupIcon className={classes.leftIcon} />
+                Nastavení
+              </Button>
+              <Button onClick={()=>{this.printTestPage()}} variant="contained" color="secondary" className={classes.button}>
+                <PrinterIcon className={classes.leftIcon} />
+                Test tisku
+              </Button>
               <Typography variant="title">
                 <Switch
                   className={classes.switch}
@@ -139,43 +157,40 @@ class App extends React.Component {
                   color="primary"
                 />
                 Tisk on/off
-               </Typography>
-               <Typography variant="title">
+              </Typography>
+              <Typography variant="title">
                 <Switch
                   className={classes.switch}
                   checked={this.state.show_debug}
-                  onChange={(e,checked)=>this.setState({show_debug:checked})}
+                  onChange={(e,checked)=>{ this.setState({show_debug:checked}); if (checked) {this.openDevTool()}} }
                   value="checkedB"
                   color="primary"
                 />
                 Debug on/off
-               </Typography>
+              </Typography>
             </Paper>
+
             <Paper className={classes.paper}>
               <ZPLEdit onSubmit = {(zpl)=>this.doPrint(zpl)} />
             </Paper>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={6}>
+            {this.state.show_settings && (
+              <React.Fragment>
+                <Printers />
+                <Pusher />
+              </React.Fragment>
+            )}
+
             <Paper className={classes.graypaper}>
               <ZPLView data={this.state.zpl_preview} />
             </Paper>
           </Grid>
   
 
-           <Grid item xs={4}>
-            <Button onClick={()=>{this.setState({show_printers:!this.state.show_printers})}}> printers </Button>
-            <Button onClick={()=>{this.setState({show_pusher:!this.state.show_pusher})}}> pusher </Button>
-            <Button onClick={()=>{this.setState({grab_events:!this.state.grab_events})}}> events </Button>
-            <Button onClick={()=>{this.printTestPage()}}> print test page </Button>
-            <Button onClick={()=>{this.openDevTool()}}> devtool </Button>
-          </Grid>
+          
 
-          <Grid item xs={12}>
-          {this.state.show_printers && (<Printers />)}
-          {this.state.show_pusher && (<Pusher />)}
-          {this.state.grab_events && (<PusherEvents onPrint={(zpl)=>this.doPrint(zpl)}/>)}
-          </Grid>
 
  
         </Grid>
@@ -185,6 +200,7 @@ class App extends React.Component {
 
   App.propTypes = {
     classes: PropTypes.object.isRequired,
+    redux_state: PropTypes.object,
     online: PropTypes.bool,
     pusher_ready: PropTypes.bool,
     printer: PropTypes.string,
@@ -197,6 +213,7 @@ class App extends React.Component {
         pusher: state.pusher,
         online: state.status.online,
         pusher_ready: state.status.pusher_ready,
+        redux_state: state
     }
   }
   

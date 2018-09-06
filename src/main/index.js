@@ -16,7 +16,9 @@ let mainWindow
 function createMainWindow() {
   const window = new BrowserWindow({
     webPreferences: {webSecurity: false},
-    title: "EPrinter 1.0"
+    title: "EPrinter 1.0",
+    width:700,
+    height:550,
   });
 
   if (isDevelopment) {
