@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import rootReducer from './reducers'
-
+import { setOnline } from './actions';
 import createElectronStorage from "redux-persist-electron-storage";
 const persistConfig = {
   key: 'root',
@@ -42,8 +42,19 @@ channel.bind("my-event",function(data){
 
 console.log("renderer.js","start");
 
+const alertOnlineStatus = () => {
+  if (navigator.onLine) {
+    console.log("Electron is online")
+    store.dispatch(setOnline(true));
+  } else {
+    console.log("Electron is offline")
+    store.dispatch(setOnline(false));
+  } 
+}
 
-
+window.addEventListener('online',  alertOnlineStatus)
+window.addEventListener('offline',  alertOnlineStatus)
+alertOnlineStatus();
 render( 
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

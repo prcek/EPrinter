@@ -104,17 +104,14 @@ class App extends React.Component {
     }
 
     render() {
-      const {classes} = this.props;
+      const {classes,online} = this.props;
       const cfgOk = this.isCfgOk();
       return (
         <Grid container spacing={24}>
-
- 
           <Grid item xs={4}>
             <Paper className={classes.paper}>
-              <StatusCard label="tiskarna" ok={cfgOk} />
-              <StatusCard label="server" ok={cfgOk} />
               <StatusCard label="konfigurace" ok={cfgOk} />
+              <StatusCard label="online" ok={online} />
               <StatusCard label="tisk" ok={this.state.print_on} ledRef={this.printLed} />
             </Paper>
             <Paper className={classes.paper}>
@@ -176,6 +173,7 @@ class App extends React.Component {
 
   App.propTypes = {
     classes: PropTypes.object.isRequired,
+    online: PropTypes.bool,
     printer: PropTypes.string,
     pusher: PropTypes.shape({apikey:PropTypes.string,cluster:PropTypes.string,channel:PropTypes.string}).isRequired,
   };
@@ -183,7 +181,8 @@ class App extends React.Component {
   function mapStateToProps(state) {
     return { 
         printer: state.printer.printer,
-        pusher: state.pusher
+        pusher: state.pusher,
+        online: state.status.online,
     }
   }
   
