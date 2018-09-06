@@ -3,9 +3,10 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import SetupIcon from '@material-ui/icons/Settings';
 import PrinterIcon from '@material-ui/icons/Print';
-import Printers from './Printers';
-import Pusher from './Pusher';
-import PusherEvents from './PusherEvents';
+//import Printers from './Printers';
+//import Pusher from './Pusher';
+import Settings from './Settings';
+//import PusherEvents from './PusherEvents';
 import { connect } from 'react-redux'
 import promiseIpc from 'electron-promise-ipc';
 import PropTypes from 'prop-types';
@@ -178,21 +179,16 @@ class App extends React.Component {
           <Grid item xs={6}>
             {this.state.show_settings && (
               <React.Fragment>
-                <Printers />
-                <Pusher />
+                <Settings onClose={()=>this.setState({show_settings:false})}/>
               </React.Fragment>
             )}
-
-            <Paper className={classes.graypaper}>
-              <ZPLView data={this.state.zpl_preview} />
-            </Paper>
+            {!this.state.show_settings && (
+              <Paper className={classes.graypaper}>
+                <ZPLView data={this.state.zpl_preview} />
+              </Paper>
+            )}  
           </Grid>
   
-
-          
-
-
- 
         </Grid>
       );
     }

@@ -27,6 +27,7 @@ class ZPLView extends React.Component {
     }
 
     fetchImg(data) {
+      console.log("ZPLView fetch data",data)
       if (data==null  || data.length==0) {
         return;
       }
@@ -51,7 +52,11 @@ class ZPLView extends React.Component {
     }
 
     componentDidMount() {
-      this.fetchImg(this.props.data);
+      if (this.props.data) {
+        this.fetchImg(this.props.data);
+      } else {
+        this.fetchImg(ZPLView.defaultProps.data);
+      }
     }
 
     componentDidUpdate(prevProps) {
@@ -65,10 +70,10 @@ class ZPLView extends React.Component {
       const {imgdata,error} = this.state;
       return (
         <div style={{width:"100%"}}>
-          {imgdata && (
+          {error && (<p> zpl view error </p>)}
+          {imgdata && !error && (
             <img  src={imgdata} style={{width:"100%"}} />
           )}
-          {error && (<p> zpl view error </p>)}
         </div>
       );
     }
@@ -76,6 +81,11 @@ class ZPLView extends React.Component {
 
 ZPLView.propTypes = {
   data: PropTypes.string
+};
+
+
+ZPLView.defaultProps = {
+  data: "^XA^FD.^FS^XZ"
 };
 
 export default (ZPLView);
