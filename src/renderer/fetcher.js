@@ -17,7 +17,7 @@ function nes(s) {
 class Fetcher {
     constructor(store){
         this.store = store;
-
+        this.cb = null;
         const state = store.getState();
         this.apikey = null;
         this.cluster = null;
@@ -126,8 +126,19 @@ class Fetcher {
         this.store.dispatch(setPusherReady(ready));
     }
 
-    onPusher(data) {
 
+    setCB(cb) {
+        this.cb=cb;
+    }
+    clearCB() {
+        this.cb = null;
+    }
+
+    onPusher(data) {
+        console.log("PUSHER ON DATA",data)
+        if (this.cb) {
+            this.cb(data.zpl);
+        }
     }
 
     onStoreChange() {

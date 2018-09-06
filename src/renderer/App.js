@@ -69,6 +69,7 @@ class App extends React.Component {
         zpl_preview:null,
       }
       this.printLed = React.createRef();
+      this.serverLed = React.createRef();
     }
     isCfgOk() {
       const { printer, pusher} = this.props;
@@ -83,7 +84,16 @@ class App extends React.Component {
           this.setState({printer_info:res});
         })
       }
+      this.props.fetcher.setCB((zpl)=>{
+          if (this.serverLed.current) {
+            this.serverLed.current.blink();
+          }
+          this.doPrint(zpl);
+      });
 
+    }
+    componentWillUnmount() {
+      this.props.fetcher.clearCB();
     }
 
 
@@ -93,12 +103,12 @@ class App extends React.Component {
       });
     }
 
-    doPrint(zpl) {
+    doPrint(zpl,force=false) {
       this.setState({zpl_preview:zpl});
-      if (this.printLed.current) {
-        this.printLed.current.blink();
-      }
-      if (this.state.print_on) {
+      if (this.state.print_on || force) {
+        if (this.printLed.current) {
+          this.printLed.current.blink();
+        }
         promiseIpc.send('printzpl',{zpl:zpl,printer:this.props.printer}).then((data) =>{
           console.log("printzpl res",data)
         }).catch(e => console.error(e));
@@ -107,12 +117,7 @@ class App extends React.Component {
 
 
     printTestPage() {
-      this.setState({zpl_preview:ZPL_TEST_PAGE});
-      if (this.state.print_on) {
-        promiseIpc.send('printzpl',{zpl:ZPL_TEST_PAGE,printer:this.props.printer}).then((data) =>{
-          console.log("printzpl res",data)
-        }).catch(e => console.error(e));
-      }
+      this.doPrint(ZPL_TEST_PAGE,true);
     }
 
     render() {
@@ -135,7 +140,7 @@ class App extends React.Component {
             <Paper className={classes.paper}>
               <StatusCard label="konfigurace" ok={cfgOk} />
               <StatusCard label="online" ok={online} />
-              <StatusCard label="server" ok={pusher_ready} />
+              <StatusCard label="server" ok={pusher_ready} ledRef={this.serverLed} />
               <StatusCard label="tisk" ok={this.state.print_on} ledRef={this.printLed} />
             </Paper>
             <Paper className={classes.paper}>
@@ -170,10 +175,11 @@ class App extends React.Component {
                 Debug on/off
               </Typography>
             </Paper>
-
+            {this.state.show_debug && (
             <Paper className={classes.paper}>
               <ZPLEdit onSubmit = {(zpl)=>this.doPrint(zpl)} />
             </Paper>
+            )}
           </Grid>
 
           <Grid item xs={6}>
@@ -196,6 +202,7 @@ class App extends React.Component {
 
   App.propTypes = {
     classes: PropTypes.object.isRequired,
+    fetcher: PropTypes.object.isRequired,
     redux_state: PropTypes.object,
     online: PropTypes.bool,
     pusher_ready: PropTypes.bool,
