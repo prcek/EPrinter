@@ -72,6 +72,7 @@ class App extends React.Component {
           this.setState({printer_info:res});
         })
       }
+
     }
 
 
@@ -104,7 +105,7 @@ class App extends React.Component {
     }
 
     render() {
-      const {classes,online} = this.props;
+      const {classes,online,pusher_ready} = this.props;
       const cfgOk = this.isCfgOk();
       return (
         <Grid container spacing={24}>
@@ -112,6 +113,7 @@ class App extends React.Component {
             <Paper className={classes.paper}>
               <StatusCard label="konfigurace" ok={cfgOk} />
               <StatusCard label="online" ok={online} />
+              <StatusCard label="server" ok={pusher_ready} />
               <StatusCard label="tisk" ok={this.state.print_on} ledRef={this.printLed} />
             </Paper>
             <Paper className={classes.paper}>
@@ -123,12 +125,8 @@ class App extends React.Component {
                   value="checkedB"
                   color="primary"
                 />
-                Tisk
+                Tisk on/off
                </Typography>
-            </Paper>
-            <Paper>
-              <Typography variant="title"> x:<Led color="green"/></Typography>
-              <Typography variant="title"> x:<Led color="red"/></Typography>
             </Paper>
     
             <ZPLEdit onSubmit = {(zpl)=>this.doPrint(zpl)} />
@@ -174,6 +172,7 @@ class App extends React.Component {
   App.propTypes = {
     classes: PropTypes.object.isRequired,
     online: PropTypes.bool,
+    pusher_ready: PropTypes.bool,
     printer: PropTypes.string,
     pusher: PropTypes.shape({apikey:PropTypes.string,cluster:PropTypes.string,channel:PropTypes.string}).isRequired,
   };
@@ -183,6 +182,7 @@ class App extends React.Component {
         printer: state.printer.printer,
         pusher: state.pusher,
         online: state.status.online,
+        pusher_ready: state.status.pusher_ready,
     }
   }
   

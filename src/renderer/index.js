@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 //import promiseIpc from 'electron-promise-ipc';
 import App from './App';
-
+import Fetcher  from './fetcher';
 
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
@@ -54,11 +54,17 @@ const alertOnlineStatus = () => {
 
 window.addEventListener('online',  alertOnlineStatus)
 window.addEventListener('offline',  alertOnlineStatus)
+
+
 alertOnlineStatus();
+
+let fetcher = new Fetcher(store);
+
+
 render( 
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <App fetcher={fetcher}/>
       </PersistGate>
     </Provider>,
 document.getElementById('app') );

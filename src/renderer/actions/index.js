@@ -25,10 +25,16 @@ const setOnline = (value) => ({
     value
 });
 
+const setPusherReady = (value) =>({
+    type: 'SET_PUSHER_READY',
+    value
+});
+
 export {
     setPrinter,
     setPusherApiKey,
     setPusherCluster,
     setPusherChannel,
-    setOnline
+    setOnline,
+    setPusherReady,
 };

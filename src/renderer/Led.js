@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import posed from 'react-pose';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { easeInOut,linear } from '@popmotion/easing';
+import { linear } from '@popmotion/easing';
 
 
 
