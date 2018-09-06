@@ -13,13 +13,19 @@ import Paper from '@material-ui/core/Paper';
 import StatusCard from './StatusCard';
 import { withStyles } from '@material-ui/core/styles';
 import ZPLView from './ZPLView';
+import ZPLEdit from './ZPLEdit';
 
 const styles = theme => ({
  
   paper: {
     padding: theme.spacing.unit,
   },
- 
+
+  graypaper: {
+    padding: theme.spacing.unit,
+    backgroundColor:"gray"
+  },
+
 });
 
 
@@ -81,9 +87,11 @@ class App extends React.Component {
 
     printTestPage() {
       this.setState({zpl_preview:ZPL_TEST_PAGE});
-      promiseIpc.send('printzpl',{zpl:ZPL_TEST_PAGE,printer:this.props.printer}).then((data) =>{
-        console.log("printzpl res",data)
-      }).catch(e => console.error(e));
+      if (this.state.print_on) {
+        promiseIpc.send('printzpl',{zpl:ZPL_TEST_PAGE,printer:this.props.printer}).then((data) =>{
+          console.log("printzpl res",data)
+        }).catch(e => console.error(e));
+      }
     }
 
     render() {
@@ -100,10 +108,11 @@ class App extends React.Component {
               <StatusCard label="konfigurace" ok={cfgOk} />
               <StatusCard label="tisk" ok={this.state.print_on} />
             </Paper>
+            <ZPLEdit onSubmit = {(zpl)=>this.doPrint(zpl)} />
           </Grid>
 
           <Grid item xs={4}>
-            <Paper className={classes.paper}>
+            <Paper className={classes.graypaper}>
               <ZPLView data={this.state.zpl_preview} />
             </Paper>
           </Grid>

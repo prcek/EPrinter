@@ -2,6 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const TICKET_WIDTH=2.3622;  //6cm
+const TICKET_HEIGHT=3.5433; //9cm
+const TICKET_DPMM=24; //600dpi
+
+
+
 function arrayBufferToBase64(buffer) {
   var binary = '';
   var bytes = [].slice.call(new Uint8Array(buffer));
@@ -31,7 +37,7 @@ class ZPLView extends React.Component {
         mode: 'cors',
         body: formData
       };
-      fetch('http://api.labelary.com/v1/printers/8dpmm/labels/2x3/0/',options).then((response) => {
+      fetch('http://api.labelary.com/v1/printers/'+TICKET_DPMM+'dpmm/labels/'+TICKET_WIDTH+'x'+TICKET_HEIGHT+'/0/',options).then((response) => {
         if (response.status == 200) {
           response.arrayBuffer().then((buffer)=>{
             var imageStr = arrayBufferToBase64(buffer);
@@ -60,7 +66,7 @@ class ZPLView extends React.Component {
       return (
         <div style={{width:"100%"}}>
           {imgdata && (
-            <img  src={imgdata} style={{border:"1px solid blue",width:"100%"}} />
+            <img  src={imgdata} style={{width:"100%"}} />
           )}
           {error && (<p> zpl view error </p>)}
         </div>
