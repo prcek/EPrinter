@@ -11,7 +11,16 @@ const styles = theme => ({
         width: 200,
       },
 });
+/*
 
+^XA
+^A@N,25,25,E:TT0003M_.FNT
+^CI28
+^FO10,50
+^FDZvlášť zákeřný učeň s ďolíčky běží podél zóny úlů. ^FS
+^XZ
+
+*/
 
 
 class ZPLEdit extends React.Component {
