@@ -20,6 +20,27 @@ const styles = theme => ({
 ^FDZvlášť zákeřný učeň s ďolíčky běží podél zóny úlů. ^FS
 ^XZ
 
+
+^FO30,210
+^BQN,2,4
+^FDC1DS-GRQM-S7R9^FS
+^FO30,310
+^FDC1DS-GRQM-S7R9^FS
+^FO150,310
+^FD1203kc^FS
+
+^XA
+^JMA
+^FO0,0
+^FDX^FS
+^FO0,345
+^FDX^FS
+
+^FO225,0
+^FDX^FS
+^FO225,345
+^FDX^FS
+
 */
 
 
@@ -27,7 +48,7 @@ class ZPLEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            zpl:"^XA\n^A@N200,200\n^FDAhoj^FS\n^XZ"
+            zpl:"^XA\n^FO0,0\n^FDX^FS\n^FO0,345\n^FDX^FS\n^FO225,0\n^FDX^FS\n^FO225,345\n^FDX^FS\n^XZ"
         }
     }
     render() {

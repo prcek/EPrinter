@@ -2,8 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TICKET_WIDTH=1.15; 
-const TICKET_HEIGHT=1.75;
+const TICKET_WIDTH=1.15*2; 
+const TICKET_HEIGHT=1.85*2;
 const TICKET_DPMM=8; 
 
 

@@ -4,7 +4,7 @@ import Pusher from 'pusher-js';
 import { setPusherReady } from './actions';
 
 
-const EVENT_NAME = "my-event";
+const EVENT_NAME = "print";
 
 function nes(s) {
     if (s  && s.length>0) {
