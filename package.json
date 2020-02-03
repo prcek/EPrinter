@@ -33,7 +33,7 @@
     "classnames": "^2.2.6",
     "electron-devtools-installer": "^2.2.4",
     "electron-promise-ipc": "^0.1.3",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "printer": "git+https://github.com/tojocky/node-printer.git",
     "prop-types": "^15.6.2",
     "pusher-js": "^4.3.1",
