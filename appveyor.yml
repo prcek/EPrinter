@@ -1,7 +1,7 @@
 image: Visual Studio 2017
 
 platform:
-  - x64
+  - x86
 
 environment:
   nodejs_version: 11
@@ -11,7 +11,7 @@ init:
   - git config --global core.autocrlf input
 
 install:
-  - ps: Install-Product node $env:nodejs_version x64
+  - ps: Install-Product node $env:nodejs_version x86
   - set CI=true
   - yarn
 
