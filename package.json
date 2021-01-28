@@ -20,7 +20,7 @@
   "homepage": "https://github.com/prcek/EPrinter#readme",
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
-    "electron": "^2.0.8",
+    "electron": "^9.4.0",
     "electron-builder": "^20.28.3",
     "electron-webpack": "^2.3.1",
     "electron-webpack-eslint": "^3.0.0",
